@@ -17,13 +17,11 @@ namespace Capstone.Web.Controllers
             this.parkDAO = parkDAO;
         }
 
-        public IActionResult Home()
+        public IActionResult Home(Park park)
         {
-            // can't work out how to display in the view
-            //IList<Park> AllParks = parkDAO.GetParks();
-            //Park.AllParks
-            //return View(parkSearch);
-            return View();
+            IList<Park> output = parkDAO.GetParks();
+            park.AllParks = output;
+            return View(park);
         }
 
       
