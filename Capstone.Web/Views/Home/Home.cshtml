@@ -5,4 +5,7 @@
 
 <h2>Park</h2>
 
-@Model.
+@foreach(var park in Model.AllParks)
+{
+    <p>@park.ParkName</p>
+}
