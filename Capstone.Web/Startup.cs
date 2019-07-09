@@ -31,7 +31,7 @@ namespace Capstone.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddTransient<IParkDAO>(j => new ParkSqlDAO(@"Data Source=.\sqlexpress;Initial Catalog=NPGeek;Integrated Security=true;"));
+            services.AddTransient<IParkDAO, ParkSqlDAO>(j => new ParkSqlDAO(@"Data Source=.\sqlexpress;Initial Catalog=NPGeek;Integrated Security=true;"));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
