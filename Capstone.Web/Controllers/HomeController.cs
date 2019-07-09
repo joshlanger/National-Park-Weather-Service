@@ -17,14 +17,12 @@ namespace Capstone.Web.Controllers
             this.parkDAO = parkDAO;
         }
 
-        public IActionResult Home(Park park)
+        public IActionResult Park(Park park)
         {
             IList<Park> output = parkDAO.GetParks();
             park.AllParks = output;
             return View(park);
         }
-
-      
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
