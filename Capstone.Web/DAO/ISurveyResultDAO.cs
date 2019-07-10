@@ -1,4 +1,5 @@
 ﻿using Capstone.Web.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,6 @@ namespace Capstone.Web.DAO
         /// <returns></returns>
         IList<SurveyResult> GetSurveys();
         void AddSurvey(SurveyResult survey);
+        IList<SelectListItem> GetParkNames();
     }
 }

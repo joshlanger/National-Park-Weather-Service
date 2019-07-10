@@ -16,13 +16,13 @@ namespace Capstone.Web.Controllers
         /// </summary>
         private IParkDAO parkDAO;
         private IWeatherDAO weatherDAO;
-        public HomeController(IParkDAO parkDAO, IWeatherDAO weatherDAO)
+        private ISurveyResultDAO surveyResultDAO;
+        public HomeController(IParkDAO parkDAO, IWeatherDAO weatherDAO, ISurveyResultDAO surveyResultDAO)
         {
+            this.surveyResultDAO = surveyResultDAO;
             this.weatherDAO = weatherDAO;
             this.parkDAO = parkDAO;
         }
-
-       
        
         /// <summary>
         /// Controls the Home Page view of the parks
@@ -35,6 +35,7 @@ namespace Capstone.Web.Controllers
             park.AllParks = output;
             return View(park);
         }
+        
         //is it ok to have all this logic in the controller?  some of it could be moved.
         public IActionResult Detail(string id)
         {
@@ -46,6 +47,21 @@ namespace Capstone.Web.Controllers
             IList<Weather> CurrentPark = weatherDAO.GetWeather(id);
             CurrentDetails.ParkWeather = CurrentPark[0];
             return View(CurrentDetails);
+        }
+
+        [HttpGet]
+        public IActionResult Survey()
+        {
+            SurveyResult surveyResult = new SurveyResult();
+            surveyResult.Names = surveyResultDAO.GetParkNames();
+            return View(surveyResult);
+        }
+
+        [HttpPost]
+        public IActionResult Suvey(SurveyResult survey)
+        {
+            surveyResultDAO.AddSurvey(survey);
+            return RedirectToAction("Survey", "Home");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

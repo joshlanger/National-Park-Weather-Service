@@ -10,7 +10,7 @@ namespace Capstone.Web.Tests
     [TestClass]
     public class CapstoneWebDAOTests
     {
-        protected string ConnectionString = "Server=.SQLEXPRESS;Database=NPGeek;Trusted_Connection=True";
+        protected string ConnectionString = "Server=.\\SQLEXPRESS;Database=NPGeek;Trusted_Connection=True";
         private TransactionScope transaction;
 
         [TestInitialize]

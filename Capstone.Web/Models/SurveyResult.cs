@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Capstone.Web.DAO;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -19,6 +21,12 @@ namespace Capstone.Web.Models
         /// </summary>
         [Display(Name = "Park Code")]
         public string ParkCode { get; set; }
+
+        /// <summary>
+        /// Park name obtained through SQL table join
+        /// </summary>
+        [Display(Name ="Favorite National Park")]
+        public string ParkName { get; set; }
 
         /// <summary>
         /// Email address of the survey taker
@@ -42,5 +50,7 @@ namespace Capstone.Web.Models
         /// List of survey results from the database
         /// </summary>
         public IList<SurveyResult> AllSurveys { get; set; }
+
+        public IList<SelectListItem> Names { get; set; }
     }
 }
