@@ -44,6 +44,11 @@ namespace Capstone.Web.DAO
             return AllParks;
         }
 
+        /// <summary>
+        /// A method to call on a specific park for the detail page using Dapper
+        /// </summary>
+        /// <param name="parkCode"></param>
+        /// <returns></returns>
         public IList<Park> GetSelectedPark (string parkCode)
         {
             IList<Park> SingleParkList = new List<Park>();
@@ -61,7 +66,6 @@ namespace Capstone.Web.DAO
             {
                 throw;
             }
-            //SelectedPark = SingleParkList[0];
             return SingleParkList;
         }
     }

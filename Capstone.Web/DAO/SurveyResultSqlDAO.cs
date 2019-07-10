@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Capstone.Web.DAO
 {
@@ -32,7 +33,7 @@ namespace Capstone.Web.DAO
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    string cmd = "SELECT * FROM survey_result";
+                    string cmd = "SELECT surveyId, survey_result.parkCode, parkName, emailAddress, survey_result.state, activityLevel FROM survey_result JOIN park ON survey_result.parkCode = park.parkCode;";
                     AllSurveys = conn.Query<SurveyResult>(cmd).ToList();
                 }
             }
@@ -62,6 +63,23 @@ namespace Capstone.Web.DAO
             {
                 throw;
             }
+        }
+
+        public IList<SelectListItem> GetParkNames()
+        {
+            IList<SelectListItem> Names = new List<SelectListItem>();
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("SELECT parkName FROM park;", conn);
+                SqlDataReader reader = cmd.ExecuteReader();
+                while(reader.Read())
+                {
+                    Names.Add(new SelectListItem() { Text = Convert.ToString(reader["parkName"]) });
+                }
+            }
+            return Names;
         }
     }
 }
