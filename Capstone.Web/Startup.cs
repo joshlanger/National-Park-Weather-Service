@@ -31,7 +31,11 @@ namespace Capstone.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddTransient<IParkDAO, ParkSqlDAO>(j => new ParkSqlDAO(@"Data Source=.\sqlexpress;Initial Catalog=NPGeek;Integrated Security=true;"));
+            // Added a connection string for dependency injection from the JSON file
+            string connectionString = Configuration.GetConnectionString("Default");
+
+            // Added a scoped instance of the Park table
+            services.AddScoped<IParkDAO, ParkSqlDAO>(p => new ParkSqlDAO(connectionString));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

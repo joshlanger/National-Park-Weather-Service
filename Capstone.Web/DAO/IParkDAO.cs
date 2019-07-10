@@ -8,6 +8,10 @@ namespace Capstone.Web.DAO
 {
     public interface IParkDAO
     {
+        /// <summary>
+        /// Inteface for the Park SQL DAO
+        /// </summary>
+        /// <returns></returns>
         IList<Park> GetParks();
     }
 }

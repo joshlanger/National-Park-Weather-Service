@@ -98,7 +98,6 @@ namespace Capstone.Web.Models
         [Display(Name = "Number of Animal Species")]
         public int NumberOfAnimalSpecies { get; set; }
 
-        //TODO Do we need this list?
         /// <summary>
         /// List of parks from the database
         /// </summary>

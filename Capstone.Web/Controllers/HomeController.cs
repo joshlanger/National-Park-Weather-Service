@@ -11,12 +11,20 @@ namespace Capstone.Web.Controllers
 {
     public class HomeController : Controller
     {
+        /// <summary>
+        /// Instaniate the Park DAO
+        /// </summary>
         private IParkDAO parkDAO;
         public HomeController(IParkDAO parkDAO)
         {
             this.parkDAO = parkDAO;
         }
 
+        /// <summary>
+        /// Controls the Home Page view of the parks
+        /// </summary>
+        /// <param name="park">Passing in a paramter of Park</param>
+        /// <returns>Returns a view of the Home Page of parks</returns>
         public IActionResult Park(Park park)
         {
             IList<Park> output = parkDAO.GetParks();

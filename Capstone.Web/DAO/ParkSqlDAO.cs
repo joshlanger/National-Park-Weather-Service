@@ -11,12 +11,19 @@ namespace Capstone.Web.DAO
 {
     public class ParkSqlDAO : IParkDAO
     {
+        /// <summary>
+        /// Instantiating the connection string for the SQL database
+        /// </summary>
         private string connectionString;
         public ParkSqlDAO(string connectionString)
         {
             this.connectionString = connectionString;
         }
 
+        /// <summary>
+        /// A method to build a list of Park objects from the SQL database using Dapper
+        /// </summary>
+        /// <returns>A list of Park objects</returns>
         public IList<Park> GetParks()
         {
             IList<Park> AllParks = new List<Park>();
