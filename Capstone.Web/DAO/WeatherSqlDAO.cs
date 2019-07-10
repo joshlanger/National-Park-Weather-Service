@@ -23,7 +23,7 @@ namespace Capstone.Web.DAO
         /// A method to build a list of Park objects from the SQL database using Dapper
         /// </summary>
         /// <returns>A list of Park objects</returns>
-        public IList<Weather> GetWeather()
+        public IList<Weather> GetWeather(string id)
         {
             IList<Weather> AllWeather = new List<Weather>();
             {
@@ -32,8 +32,8 @@ namespace Capstone.Web.DAO
                     using (SqlConnection conn = new SqlConnection(connectionString))
                     {
                         conn.Open();
-                        string cmd = "SELECT * FROM weather";
-                        AllWeather = conn.Query<Weather>(cmd).ToList();
+                        string cmd = "SELECT * FROM weather where parkCode = @id";
+                        AllWeather = conn.Query<Weather>(cmd, new { id}).ToList();
                     }
                 }
                 catch(SqlException)

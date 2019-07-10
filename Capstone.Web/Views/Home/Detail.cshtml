@@ -1,7 +1,28 @@
-﻿@model Park
+﻿@model ParkDetails
 @{
     ViewData["Title"] = "Detail";
 }
 
-<h1>Detail</h1>
-@Model.ParkName
+<h1 style="display:flex; justify-content:center">@Model.DetailPark.ParkName</h1>
+<div style="display:flex; justify-content:center">
+    <img src="~/images/@(Model.DetailPark.ParkCode).jpg" />
+</div>
+<h4>Quick Facts</h4>
+<div style="display:flex">
+    <div>  
+        <p>Location: @Model.DetailPark.State</p>
+        <p>Acreage: @Model.DetailPark.Acreage acres</p>
+        <p>Elevation: @Model.DetailPark.ElevationInFeet ft.</p>
+    </div>
+    <div>
+        <p>Miles of Trail: @Model.DetailPark.MilesOfTrail mi.</p>
+        <p>Number of Campsites: @Model.DetailPark.NumberOfCampsites</p>
+        <p>Climate: @Model.DetailPark.Climate</p>
+    </div>
+    <div>
+        <p>Year Founded: @Model.DetailPark.YearFounded</p>
+        <p>Annual Vistor Count: @Model.DetailPark.AnnualVisitorCount</p>
+        <p>Number of Animal Species: @Model.DetailPark.NumberOfAnimalSpecies</p>
+    </div>
+</div>
+@Model.ParkWeather.High

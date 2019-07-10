@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Capstone.Web.DAO
 {
-    interface IWeatherDAO
+    public interface IWeatherDAO
     {
         /// <summary>
         /// Inteface for the Weather SQL DAO
         /// </summary>
         /// <returns></returns>
-        IList<Weather> GetWeather();
+        IList<Weather> GetWeather(string id);
     }
 }

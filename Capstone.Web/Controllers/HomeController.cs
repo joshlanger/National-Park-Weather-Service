@@ -15,11 +15,15 @@ namespace Capstone.Web.Controllers
         /// Instaniate the Park DAO
         /// </summary>
         private IParkDAO parkDAO;
-        public HomeController(IParkDAO parkDAO)
+        private IWeatherDAO weatherDAO;
+        public HomeController(IParkDAO parkDAO, IWeatherDAO weatherDAO)
         {
+            this.weatherDAO = weatherDAO;
             this.parkDAO = parkDAO;
         }
 
+       
+       
         /// <summary>
         /// Controls the Home Page view of the parks
         /// </summary>
@@ -31,13 +35,17 @@ namespace Capstone.Web.Controllers
             park.AllParks = output;
             return View(park);
         }
-
+        //is it ok to have all this logic in the controller?  some of it could be moved.
         public IActionResult Detail(string id)
         {
             IList<Park> SingleParkList = parkDAO.GetSelectedPark(id);
             Park SelectedPark = new Park();
             SelectedPark = SingleParkList[0];
-            return View(SelectedPark);
+            ParkDetails CurrentDetails = new ParkDetails();
+            CurrentDetails.DetailPark = SelectedPark;
+            IList<Weather> CurrentPark = weatherDAO.GetWeather(id);
+            CurrentDetails.ParkWeather = CurrentPark[0];
+            return View(CurrentDetails);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
