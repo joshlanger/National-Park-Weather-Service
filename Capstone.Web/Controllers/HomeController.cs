@@ -35,8 +35,13 @@ namespace Capstone.Web.Controllers
             park.AllParks = output;
             return View(park);
         }
-        
-        //is it ok to have all this logic in the controller?  some of it could be moved.
+
+        //TODO is it ok to have all this logic in the controller?  some of it could be moved.
+        /// <summary>
+        /// Controls the Detail Page view of each park
+        /// </summary>
+        /// <param name="id">Passing in a parameter of Park Code</param>
+        /// <returns>Returns a view of the Detail Page of the park that matched the parameter Park Code</returns>
         public IActionResult Detail(string id)
         {
             IList<Park> SingleParkList = parkDAO.GetSelectedPark(id);
@@ -49,6 +54,10 @@ namespace Capstone.Web.Controllers
             return View(CurrentDetails);
         }
 
+        /// <summary>
+        /// Controls the Survey Page view
+        /// </summary>
+        /// <returns>Returns a view of the Survey Page</returns>
         [HttpGet]
         public IActionResult Survey()
         {
@@ -57,11 +66,26 @@ namespace Capstone.Web.Controllers
             return View(surveyResult);
         }
 
+        /// <summary>
+        /// Controls the posting of the Survey back to the database
+        /// </summary>
+        /// <param name="survey">Passing in the parameter of a survey</param>
+        /// <returns>Redirects to the Favorite Park survey result Page and updates the database</returns>
         [HttpPost]
         public IActionResult Suvey(SurveyResult survey)
         {
             surveyResultDAO.AddSurvey(survey);
-            return RedirectToAction("Survey", "Home");
+            return RedirectToAction("Favorite", "Home");
+        }
+
+        /// <summary>
+        /// Controls the Favorite Park Page view
+        /// </summary>
+        /// <returns>Returns a view of the Favorite Park Page</returns>
+        [HttpGet]
+        public IActionResult Favorite()
+        {
+            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
