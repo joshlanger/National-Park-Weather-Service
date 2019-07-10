@@ -44,7 +44,7 @@ namespace Capstone.Web.Controllers
             ParkDetails CurrentDetails = new ParkDetails();
             CurrentDetails.DetailPark = SelectedPark;
             IList<Weather> CurrentPark = weatherDAO.GetWeather(id);
-            CurrentDetails.ParkWeather = CurrentPark[0];
+            CurrentDetails.ParkWeather.AllWeather[0] = CurrentPark[0];
             return View(CurrentDetails);
         }
 

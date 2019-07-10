@@ -1,14 +1,18 @@
 ﻿@model ParkDetails
 @{
     ViewData["Title"] = "Detail";
+
 }
 
-<h1 style="display:flex; justify-content:center">@Model.DetailPark.ParkName</h1>
+<h1 style="display:flex; justify-content:center; padding-bottom:20px">@Model.DetailPark.ParkName</h1>
 <div style="display:flex; justify-content:center">
     <img src="~/images/@(Model.DetailPark.ParkCode).jpg" />
 </div>
-<h4>Quick Facts</h4>
-<div style="display:flex">
+<div>
+    <p><h4 style="text-align:center">@Model.DetailPark.InspirationalQuote  - <i style="font-size:smaller">@Model.DetailPark.InspirationalQuoteSource</i></h4></p>
+</div>
+<h3 style="text-align:center; padding:20px">Quick Facts</h3>
+<div style="display:flex; justify-content:space-around">
     <div>  
         <p>Location: @Model.DetailPark.State</p>
         <p>Acreage: @Model.DetailPark.Acreage acres</p>
@@ -24,5 +28,23 @@
         <p>Annual Vistor Count: @Model.DetailPark.AnnualVisitorCount</p>
         <p>Number of Animal Species: @Model.DetailPark.NumberOfAnimalSpecies</p>
     </div>
+</div>
+<div style="padding: 40px">
+    @Model.DetailPark.ParkDescription
+</div>
+<div>
+    <h4 style="text-align:center">***Please note that the fee for entry to @Model.DetailPark.ParkName is $@Model.DetailPark.EntryFee***</h4>
+</div>
+<div style="display:flex">
+    <div>
+        <h5>Today's Weather</h5>
+        @foreach (var day in Model.ParkWeather.AllWeather)
+        {
+            @day.Forecast
+        }
+        @*<img src="~/images/@(Model.ParkWeather.AllWeather[0].Forecast).png" />*@
+    </div>
+    
+
 </div>
 @Model.ParkWeather.High

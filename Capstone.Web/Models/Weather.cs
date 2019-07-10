@@ -42,5 +42,6 @@ namespace Capstone.Web.Models
         /// List of five-day weather conditions for each park from the database
         /// </summary>
         public IList<Weather> AllWeather { get; set; }
+
     }
 }
