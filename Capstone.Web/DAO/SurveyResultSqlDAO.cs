@@ -65,6 +65,10 @@ namespace Capstone.Web.DAO
             }
         }
 
+        /// <summary>
+        /// A method to get a list of Park Names
+        /// </summary>
+        /// <returns></returns>
         public IList<SelectListItem> GetParkNames()
         {
             IList<SelectListItem> Names = new List<SelectListItem>();

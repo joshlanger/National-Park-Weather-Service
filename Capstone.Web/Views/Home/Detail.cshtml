@@ -38,11 +38,7 @@
 <div style="display:flex">
     <div>
         <h5>Today's Weather</h5>
-        @foreach (var day in Model.ParkWeather.AllWeather)
-        {
-            @day.Forecast
-        }
-        @*<img src="~/images/@(Model.ParkWeather.AllWeather[0].Forecast).png" />*@
+        <img src="~/images/@(Model.ParkWeather.Forecast).png" />
     </div>
     
 
