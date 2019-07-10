@@ -43,6 +43,10 @@ namespace Capstone.Web.DAO
             return AllSurveys;
         }
 
+        /// <summary>
+        /// A method to post a survey to the Survey Results table using Dapper
+        /// </summary>
+        /// <param name="survey">Passing in the of a Survey</param>
         public void AddSurvey(SurveyResult survey)
         {
             try
