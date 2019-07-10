@@ -3,9 +3,17 @@
     ViewData["Title"] = "Park";
 }
 
-<h2>Park</h2>
 
 @foreach(Park park in Model.AllParks)
 {
-    <p>@park.ParkName</p>
+<div style="display:flex; justify-content:space-around; padding:20px">
+    <a asp-controller="Home" asp-action="Detail" asp-route-id="@(park.ParkCode)">
+        <img style="padding-right:20px" src="~/images/@(park.ParkCode).jpg" />
+    </a>
+        <div style="display:flex; flex-direction:column; justify-content:space-between">
+            <h1>@park.ParkName</h1>
+            <h3>@park.State</h3>
+            <p>@park.ParkDescription</p>
+        </div>
+</div>
 }

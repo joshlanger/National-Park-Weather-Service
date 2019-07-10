@@ -13,5 +13,6 @@ namespace Capstone.Web.DAO
         /// </summary>
         /// <returns></returns>
         IList<Park> GetParks();
+        IList<Park> GetSelectedPark(string parkCode);
     }
 }

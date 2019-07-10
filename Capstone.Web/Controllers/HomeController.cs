@@ -32,6 +32,14 @@ namespace Capstone.Web.Controllers
             return View(park);
         }
 
+        public IActionResult Detail(string id)
+        {
+            IList<Park> SingleParkList = parkDAO.GetSelectedPark(id);
+            Park SelectedPark = new Park();
+            SelectedPark = SingleParkList[0];
+            return View(SelectedPark);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

@@ -44,5 +44,25 @@ namespace Capstone.Web.DAO
             return AllParks;
         }
 
+        public IList<Park> GetSelectedPark (string parkCode)
+        {
+            IList<Park> SingleParkList = new List<Park>();
+            Park SelectedPark = new Park();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    string cmd = "select * from park where parkcode = @parkCode;";
+                    SingleParkList = conn.Query<Park>(cmd, new {parkCode}).ToList();
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+            //SelectedPark = SingleParkList[0];
+            return SingleParkList;
+        }
     }
 }
