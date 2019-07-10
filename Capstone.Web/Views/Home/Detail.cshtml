@@ -36,11 +36,24 @@
     <h4 style="text-align:center">***Please note that the fee for entry to @Model.DetailPark.ParkName is $@Model.DetailPark.EntryFee***</h4>
 </div>
 <div style="display:flex">
-    <div>
-        <h5>Today's Weather</h5>
-        <img src="~/images/@(Model.ParkWeather.Forecast).png" />
+    <div style="padding-right:20px">
+        <h4 style="text-align:center">Today's Weather</h4>
+        <img src="~/images/@(Model.AllWeather[0].Forecast).png" />
+        <p style="text-align: center">High: @Model.AllWeather[0].High   Low: @Model.AllWeather[0].Low</p>
+    </div>
+    <div style="display:flex">
+        @foreach(var day in Model.AllWeather)
+        {
+            if (day.FiveDayForecastValue != 1)
+            {
+            <div>
+                <img style="width:50%" src="~/images/@(day.Forecast).png" />
+                <p>High: @day.High   Low: @day.Low</p>
+            </div>
+            }
+        }
     </div>
     
 
 </div>
-@Model.ParkWeather.High
+

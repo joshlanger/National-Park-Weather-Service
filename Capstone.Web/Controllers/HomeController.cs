@@ -42,16 +42,16 @@ namespace Capstone.Web.Controllers
         /// </summary>
         /// <param name="id">Passing in a parameter of Park Code</param>
         /// <returns>Returns a view of the Detail Page of the park that matched the parameter Park Code</returns>
-        public IActionResult Detail(string id)
+        public IActionResult Detail(string id, ParkDetails currentDetails)
         {
             IList<Park> SingleParkList = parkDAO.GetSelectedPark(id);
             Park SelectedPark = new Park();
             SelectedPark = SingleParkList[0];
-            ParkDetails CurrentDetails = new ParkDetails();
-            CurrentDetails.DetailPark = SelectedPark;
-            IList<Weather> CurrentPark = weatherDAO.GetWeather(id);
-            CurrentDetails.ParkWeather = CurrentPark[0];
-            return View(CurrentDetails);
+            
+            currentDetails.DetailPark = SelectedPark;
+            //IList<Weather> CurrentPark = weatherDAO.GetWeather(id);
+            currentDetails.AllWeather = weatherDAO.GetWeather(id);
+            return View(currentDetails);
         }
 
         /// <summary>
