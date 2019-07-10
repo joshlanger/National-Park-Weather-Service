@@ -34,8 +34,9 @@ namespace Capstone.Web
             // Added a connection string for dependency injection from the JSON file
             string connectionString = Configuration.GetConnectionString("Default");
 
-            // Added a scoped instance of the Park table
+            // Added a scoped instance of the database tables
             services.AddScoped<IParkDAO, ParkSqlDAO>(p => new ParkSqlDAO(connectionString));
+            services.AddScoped<ISurveyResultDAO, SurveyResultSqlDAO>(s => new SurveyResultSqlDAO(connectionString));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

@@ -33,7 +33,7 @@ namespace Capstone.Web.DAO
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    string cmd = "select * from park";
+                    string cmd = "SELECT * FROM park";
                     AllParks = conn.Query<Park>(cmd).ToList();
                 }
             }
@@ -43,6 +43,5 @@ namespace Capstone.Web.DAO
             }
             return AllParks;
         }
-
     }
 }

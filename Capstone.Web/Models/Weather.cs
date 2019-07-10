@@ -35,7 +35,7 @@ namespace Capstone.Web.Models
         /// <summary>
         /// Description of the weather conditions
         /// </summary>
-        [Display(Name = "Forecast"]
+        [Display(Name = "Forecast")]
         public string Forecast { get; set; }
 
         /// <summary>
