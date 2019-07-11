@@ -33,18 +33,22 @@ namespace Capstone.Web.Models
         /// Email address of the survey taker
         /// </summary>
         [Display(Name = "Email Address")]
+        [Required]
+        [EmailAddress(ErrorMessage = "Please provide a valid email address.")]
         public string EmailAddress { get; set; }
 
         /// <summary>
         /// State where the survey taker lives
         /// </summary>
         [Display(Name ="State")]
+        [Required]
         public string State { get; set; }
 
         /// <summary>
         /// Activity level of the survey taker
         /// </summary>
         [Display(Name ="Activity Level")]
+        [Required]
         public string ActivityLevel { get; set; }
 
         /// <summary>

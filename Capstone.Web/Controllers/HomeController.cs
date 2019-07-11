@@ -72,8 +72,13 @@ namespace Capstone.Web.Controllers
         /// <param name="survey">Passing in the parameter of a survey</param>
         /// <returns>Redirects to the Favorite Park survey result Page and updates the database</returns>
         [HttpPost]
-        public IActionResult Suvey(SurveyResult survey)
+        [ValidateAntiForgeryToken]
+        public IActionResult Survey(SurveyResult survey)
         {
+            if(!ModelState.IsValid)
+            {
+                return View(survey);
+            }
             surveyResultDAO.AddSurvey(survey);
             return RedirectToAction("Favorite", "Home");
         }
