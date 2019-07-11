@@ -27,6 +27,22 @@ namespace Capstone.Web.Models
             {"Danger! Exposure to temperatures this low can cause frost bite." }
         };
 
+        public double ConvertTemp (double temperature)
+        {
+            double toCelcius = 5 / 9;
+            double toFahrenheit = 9 / 5;
+            //get value from session.  Add to if statement.  first is for converting to celcius.
+            if(temperature == 0)
+            {
+                temperature = (temperature - 32) * toCelcius;
+            }
+            else
+            {
+                temperature = (temperature * toFahrenheit) + 32;
+            }
+            return Math.Round(temperature);
+        }
+
         //public string TemperatureAdice
         //{
         //    get

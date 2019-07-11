@@ -31,6 +31,14 @@ namespace Capstone.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            //set up the session
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.HttpOnly = true;
+            });
+
             // Added a connection string for dependency injection from the JSON file
             string connectionString = Configuration.GetConnectionString("Default");
 
@@ -38,6 +46,7 @@ namespace Capstone.Web
             services.AddScoped<IParkDAO, ParkSqlDAO>(p => new ParkSqlDAO(connectionString));
             services.AddScoped<ISurveyResultDAO, SurveyResultSqlDAO>(s => new SurveyResultSqlDAO(connectionString));
             services.AddScoped<IWeatherDAO, WeatherSqlDAO>(w => new WeatherSqlDAO(connectionString));
+
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -55,7 +64,9 @@ namespace Capstone.Web
             }
 
             app.UseStaticFiles();
-            app.UseCookiePolicy();
+            //enable session
+            app.UseSession();
+            
 
             app.UseMvc(routes =>
             {
@@ -63,6 +74,7 @@ namespace Capstone.Web
                     name: "default",
                     template: "{controller=Home}/{action=Park}/{id?}");
             });
+            app.UseCookiePolicy();
         }
     }
 }

@@ -4,7 +4,6 @@
 
 }
 
-
 <h1 style="display:flex; justify-content:center; padding-bottom:20px">@Model.DetailPark.ParkName</h1>
 <div style="display:flex; justify-content:center">
     <img src="~/images/@(Model.DetailPark.ParkCode).jpg" />
@@ -36,7 +35,6 @@
 <div style="padding-bottom:40px">
     <h4 style="text-align:center">***Please note that the fee for entry to @Model.DetailPark.ParkName is $@Model.DetailPark.EntryFee***</h4>
 </div>
-
 <div style="display:flex">
     <div style="padding-right:20px">
         <h4 style="text-align:center">Today's Weather</h4>
@@ -56,22 +54,6 @@
             @Model.TemperatureAdvice[2]
         }
         </p>
-        @*<p>@if(Model.AllWeather[0].High > 75)
-        {
-             @Model.TemperatureAdvice[76]
-        }
-        @if ((Model.AllWeather[0].High - Model.AllWeather[0].Low) > 20)
-        {
-             @Model.TemperatureAdvice[21]
-        }
-        @if(Model.AllWeather[0].Low < 20)
-        {
-             @Model.TemperatureAdvice[19]
-        }
-
-
-        </p>*@
-
     </div>
     <div style="display:flex; flex-direction:column">
         <h4 style="text-align:center; display:inline-block">Extended Forecast</h4>
@@ -88,7 +70,5 @@
             }
         </div>
         </div>
-    
-
 </div>
 
