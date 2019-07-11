@@ -48,7 +48,7 @@ namespace Capstone.Web.Models
         /// Activity level of the survey taker
         /// </summary>
         [Display(Name ="Activity Level")]
-        [Required]
+        //[Required]
         public string ActivityLevel { get; set; }
 
         /// <summary>
