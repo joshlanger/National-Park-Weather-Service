@@ -35,3 +35,9 @@ body {
         display: none;
     }
 }
+
+.weather{
+    display:grid;
+    grid-template-columns: 3fr 6fr;
+    grid-gap: 10px;
+}
