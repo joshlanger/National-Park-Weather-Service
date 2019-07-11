@@ -55,8 +55,15 @@ namespace Capstone.Web.DAO
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    string cmd = ("INSERT INTO survey_result VALUES (parkCode = @ParkCode, emailAddress = @EmailAddress, state = @State, activityLevel = @ActivityLevel)");
-                    cmd = conn.Execute(cmd, new { survey.ParkCode, survey.EmailAddress, survey.State, survey.ActivityLevel }).ToString();
+                    //string cmd = ("INSERT INTO survey_result VALUES (parkCode = @ParkCode, emailAddress = @EmailAddress, state = @State, activityLevel = @ActivityLevel)");
+                    //cmd = conn.Execute(cmd, new { survey.ParkCode, survey.EmailAddress, survey.State, survey.ActivityLevel }).ToString();
+                    SqlCommand cmd = new SqlCommand("INSERT INTO survey_result VALUES(@parkCode, @emailAddress, @state, @activityLevel);", conn);
+                    cmd.Parameters.AddWithValue("@parkCode", survey.ParkCode);
+                    cmd.Parameters.AddWithValue("@emailAddress", survey.EmailAddress);
+                    cmd.Parameters.AddWithValue("@state", survey.State);
+                    cmd.Parameters.AddWithValue("@activityLevel", survey.ActivityLevel);
+
+                    cmd.ExecuteNonQuery();
                 }
             }
             catch(SqlException)
@@ -76,11 +83,11 @@ namespace Capstone.Web.DAO
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand("SELECT parkName FROM park;", conn);
+                SqlCommand cmd = new SqlCommand("SELECT parkCode, parkName FROM park;", conn);
                 SqlDataReader reader = cmd.ExecuteReader();
                 while(reader.Read())
                 {
-                    Names.Add(new SelectListItem() { Text = Convert.ToString(reader["parkName"]) });
+                    Names.Add(new SelectListItem() { Text = Convert.ToString(reader["parkName"]), Value = Convert.ToString(reader["parkCode"]) });
                 }
             }
             return Names;
