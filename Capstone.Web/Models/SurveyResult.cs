@@ -26,6 +26,7 @@ namespace Capstone.Web.Models
         /// Park name obtained through SQL table join
         /// </summary>
         [Display(Name ="Favorite National Park")]
+        [Required]
         public string ParkName { get; set; }
 
         /// <summary>
