@@ -7,15 +7,19 @@
 <form asp-controller="Home" asp-action="Survey" method="post">
     <label asp-for="ParkName"></label>
     <select asp-for="ParkName" asp-items="Model.Names"></select>
+    <span asp-validation-for="ParkName" style="color:red"></span>
     <label asp-for="EmailAddress"></label>
     <input type="email" asp-for="EmailAddress" />
+    <span asp-validation-for="EmailAddress" style="color:red"></span>
     <label asp-for="State"></label>
     <input type="text" asp-for="State" />
+    <span asp-validation-for="State" style="color:red"></span>
     <label asp-for="ActivityLevel"></label>
-    <input type="radio" name="Activity Level" value="Inactive"> Inactive<br />
-    <input type="radio" name="Activity Level" value="Sedentary"> Sedentary<br />
-    <input type="radio" name="Activity Level" value="Active"> Active<br />
-    <input type="radio" name="Activity Level" value="Extremely Active"> Extremely Active
+    <input type="radio" name="@Model.ActivityLevel" value="Inactive"> Inactive<br>
+    <input type="radio" name="@Model.ActivityLevel" value="Sedentary"> Sedentary<br>
+    <input type="radio" name="@Model.ActivityLevel" value="Active"> Active<br>
+    <input type="radio" name="@Model.ActivityLevel" value="Extremely Active"> Extremely Active<br>
+    <span asp-validation-for="ActivityLevel" style="color:red"></span>
     <input type="submit" value="Submit" />
 </form>
 
