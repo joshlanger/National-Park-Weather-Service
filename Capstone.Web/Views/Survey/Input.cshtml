@@ -4,9 +4,9 @@
 }
 
 <h2>Survey</h2>
-<form asp-controller="Home" asp-action="Survey" method="post">
+<form asp-controller="Survey" asp-action="Survey" method="post">
     <label asp-for="ParkName"></label>
-    <select asp-for="ParkName" asp-items="Model.Names"></select>
+    <select asp-for="ParkName" asp-items="Model.ParkNames"></select>
     <span asp-validation-for="ParkName" style="color:red"></span>
     <label asp-for="EmailAddress"></label>
     <input type="email" asp-for="EmailAddress" />
@@ -19,7 +19,7 @@
     <input type="radio" name="@Model.ActivityLevel" value="Sedentary"> Sedentary<br>
     <input type="radio" name="@Model.ActivityLevel" value="Active"> Active<br>
     <input type="radio" name="@Model.ActivityLevel" value="Extremely Active"> Extremely Active<br>
-    @*<span asp-validation-for="ActivityLevel" style="color:red"></span>*@
+    <span asp-validation-for="ActivityLevel" style="color:red"></span>
     <input type="submit" value="Submit" />
 </form>
 

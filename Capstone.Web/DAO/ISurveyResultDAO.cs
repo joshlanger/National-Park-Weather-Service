@@ -13,8 +13,7 @@ namespace Capstone.Web.DAO
         /// Inteface for the Park SQL DAO
         /// </summary>
         /// <returns></returns>
-        IList<SurveyResult> GetSurveys();
+        IDictionary<string, int> GetSurveys();
         void AddSurvey(SurveyResult survey);
-        IList<SelectListItem> GetParkNames();
     }
 }

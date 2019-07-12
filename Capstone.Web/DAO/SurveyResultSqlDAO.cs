@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Data;
 
 namespace Capstone.Web.DAO
 {
@@ -24,17 +25,19 @@ namespace Capstone.Web.DAO
         /// A method to build a list of Survey Result objects from the SQL database using Dapper
         /// </summary>
         /// <returns>A list of Survey Result objects</returns>
-        public IList<SurveyResult> GetSurveys()
+        public IDictionary<string, int> GetSurveys()
         {
-            IList<SurveyResult> AllSurveys = new List<SurveyResult>();
+            IDictionary<string, int> AllSurveys = new Dictionary<string, int>();
 
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    string cmd = "SELECT surveyId, survey_result.parkCode, parkName, emailAddress, survey_result.state, activityLevel FROM survey_result JOIN park ON survey_result.parkCode = park.parkCode;";
-                    AllSurveys = conn.Query<SurveyResult>(cmd).ToList();
+                    string cmd = "SELECT COUNT(*) as votes, parkCode FROM survey_result GROUP BY parkCode ORDER BY votes DESC, parkCode;";
+                    AllSurveys = conn.Query(cmd).ToDictionary(
+                        row => (string)row.parkCode,
+                        row => (int)row.votes);
                 }
             }
             catch(SqlException)
@@ -42,6 +45,27 @@ namespace Capstone.Web.DAO
                 throw;
             }
             return AllSurveys;
+            
+        }
+
+        public IList<SurveyResult> GetNames()
+        {
+            IList<SurveyResult> Names = new List<SurveyResult>();
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    string cmd = "SELECT parkCode, parkName FROM park;";
+                    Names = conn.Query<SurveyResult>(cmd).ToList();
+                }
+            }
+            catch(SqlException)
+            {
+                throw;
+            }
+            return Names;
         }
 
         /// <summary>
@@ -55,42 +79,30 @@ namespace Capstone.Web.DAO
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    //string cmd = ("INSERT INTO survey_result VALUES (parkCode = @ParkCode, emailAddress = @EmailAddress, state = @State, activityLevel = @ActivityLevel)");
-                    //cmd = conn.Execute(cmd, new { survey.ParkCode, survey.EmailAddress, survey.State, survey.ActivityLevel }).ToString();
-                    SqlCommand cmd = new SqlCommand("INSERT INTO survey_result VALUES(@parkCode, @emailAddress, @state, @activityLevel);", conn);
-                    cmd.Parameters.AddWithValue("@parkCode", survey.ParkCode);
-                    cmd.Parameters.AddWithValue("@emailAddress", survey.EmailAddress);
-                    cmd.Parameters.AddWithValue("@state", survey.State);
-                    cmd.Parameters.AddWithValue("@activityLevel", survey.ActivityLevel);
+                    string cmd = "INSERT INTO survey_result VALUES (@parkCode, @emailAddress, @state, @activityLevel)";
+                    conn.Query(cmd, new
+                    {
+                        parkCode = survey.ParkCode,
+                        emailAddress = survey.EmailAddress,
+                        state = survey.State,
+                        activityLevel = survey.ActivityLevel
+                    });
+                    
+                    ////string cmd = ("INSERT INTO survey_result VALUES (parkCode = @ParkCode, emailAddress = @EmailAddress, state = @State, activityLevel = @ActivityLevel)");
+                    ////cmd = conn.Execute(cmd, new { survey.ParkCode, survey.EmailAddress, survey.State, survey.ActivityLevel }).ToString();
+                    //SqlCommand cmd = new SqlCommand("INSERT INTO survey_result VALUES(@parkCode, @emailAddress, @state, @activityLevel);", conn);
+                    //cmd.Parameters.AddWithValue("@parkCode", survey.ParkCode);
+                    //cmd.Parameters.AddWithValue("@emailAddress", survey.EmailAddress);
+                    //cmd.Parameters.AddWithValue("@state", survey.State);
+                    //cmd.Parameters.AddWithValue("@activityLevel", survey.ActivityLevel);
 
-                    cmd.ExecuteNonQuery();
+                    //cmd.ExecuteNonQuery();
                 }
             }
             catch(SqlException)
             {
                 throw;
             }
-        }
-
-        /// <summary>
-        /// A method to get a list of Park Names
-        /// </summary>
-        /// <returns></returns>
-        public IList<SelectListItem> GetParkNames()
-        {
-            IList<SelectListItem> Names = new List<SelectListItem>();
-
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand("SELECT parkCode, parkName FROM park;", conn);
-                SqlDataReader reader = cmd.ExecuteReader();
-                while(reader.Read())
-                {
-                    Names.Add(new SelectListItem() { Text = Convert.ToString(reader["parkName"]), Value = Convert.ToString(reader["parkCode"]) });
-                }
-            }
-            return Names;
         }
     }
 }

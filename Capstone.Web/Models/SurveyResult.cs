@@ -56,6 +56,22 @@ namespace Capstone.Web.Models
         /// </summary>
         public IList<SurveyResult> AllSurveys { get; set; }
 
-        public IList<SelectListItem> Names { get; set; }
+        public IList<SurveyResult> Names { get; set; }
+
+        public IList<SelectListItem> ParkNames = new List<SelectListItem>()
+            {
+            new SelectListItem { Text = "Inactive", Value = "Inactive" },
+            new SelectListItem { Text = "Sedentary", Value = "Sedentary" },
+            new SelectListItem { Text = "Active", Value = "Active" },
+            new SelectListItem { Text = "Extremely Active", Value = "Extremely Active}" }
+        };
+
+        public IList<SelectListItem> ActivityLevels = new List<SelectListItem>()
+        {
+            new SelectListItem { Text = "Inactive", Value = "Inactive" },
+            new SelectListItem { Text = "Sedentary", Value = "Sedentary" },
+            new SelectListItem { Text = "Active", Value = "Active" },
+            new SelectListItem { Text = "Extremely Active", Value = "Extremely Active}" }
+        };
     }
 }

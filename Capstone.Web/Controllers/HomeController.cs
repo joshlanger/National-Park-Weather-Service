@@ -20,10 +20,8 @@ namespace Capstone.Web.Controllers
         /// </summary>
         private IParkDAO parkDAO;
         private IWeatherDAO weatherDAO;
-        private ISurveyResultDAO surveyResultDAO;
-        public HomeController(IParkDAO parkDAO, IWeatherDAO weatherDAO, ISurveyResultDAO surveyResultDAO)
+        public HomeController(IParkDAO parkDAO, IWeatherDAO weatherDAO)
         {
-            this.surveyResultDAO = surveyResultDAO;
             this.weatherDAO = weatherDAO;
             this.parkDAO = parkDAO;
         }
@@ -58,34 +56,34 @@ namespace Capstone.Web.Controllers
             return View(currentDetails);
         }
 
-        /// <summary>
-        /// Controls the Survey Page view
-        /// </summary>
-        /// <returns>Returns a view of the Survey Page</returns>
-        [HttpGet]
-        public IActionResult Survey()
-        {
-            SurveyResult surveyResult = new SurveyResult();
-            surveyResult.Names = surveyResultDAO.GetParkNames();
-            return View(surveyResult);
-        }
+        ///// <summary>
+        ///// Controls the Survey Page view
+        ///// </summary>
+        ///// <returns>Returns a view of the Survey Page</returns>
+        //[HttpGet]
+        //public IActionResult Survey()
+        //{
+        //    SurveyResult surveyResult = new SurveyResult();
+        //    surveyResult.Names = surveyResultDAO.GetParkNames();
+        //    return View(surveyResult);
+        //}
 
-        /// <summary>
-        /// Controls the posting of the Survey back to the database
-        /// </summary>
-        /// <param name="survey">Passing in the parameter of a survey</param>
-        /// <returns>Redirects to the Favorite Park survey result Page and updates the database</returns>
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Survey(SurveyResult survey)
-        {
-            if(!ModelState.IsValid)
-            {
-                return View(survey);
-            }
-            surveyResultDAO.AddSurvey(survey);
-            return RedirectToAction("Favorite", "Home");
-        }
+        ///// <summary>
+        ///// Controls the posting of the Survey back to the database
+        ///// </summary>
+        ///// <param name="survey">Passing in the parameter of a survey</param>
+        ///// <returns>Redirects to the Favorite Park survey result Page and updates the database</returns>
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult Survey(SurveyResult survey)
+        //{
+        //    if(!ModelState.IsValid)
+        //    {
+        //        return View(survey);
+        //    }
+        //    surveyResultDAO.AddSurvey(survey);
+        //    return RedirectToAction("Favorite", "Home");
+        //}
 
         /// <summary>
         /// Controls the Favorite Park Page view
@@ -120,16 +118,16 @@ namespace Capstone.Web.Controllers
             HttpContext.Session.SetString("Temperature", temperature_string);
         }
 
-        //we left off here.  the idea is to use the converter within the controller
-        public ActionResult SwitchTemperature (ParkDetails parkDetails, int temp)
-        {
-            parkDetails.AllWeather = weatherDAO.GetWeather()
-        }
+        //    //we left off here.  the idea is to use the converter within the controller
+        //    public ActionResult SwitchTemperature (ParkDetails parkDetails, int temp)
+        //    {
+        //        parkDetails.AllWeather = weatherDAO.GetWeather()
+        //    }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+        //    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        //    public IActionResult Error()
+        //    {
+        //        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        //    }
     }
 }
