@@ -14,7 +14,7 @@ namespace Capstone.Web.Controllers
     public class HomeController : Controller
     {
 
-
+        ParkDetails temp = new ParkDetails();
         /// <summary>
         /// Instaniate the Park DAO
         /// </summary>
@@ -46,13 +46,27 @@ namespace Capstone.Web.Controllers
         /// <returns>Returns a view of the Detail Page of the park that matched the parameter Park Code</returns>
         public IActionResult Detail(string id, ParkDetails currentDetails)
         {
+            bool myonoffswitch = currentDetails.IsFahrenheit;
+            //uses the id from the park page that the user selected to get info on the specific park, putting it into a list with only one index.
             IList<Park> SingleParkList = parkDAO.GetSelectedPark(id);
             Park SelectedPark = new Park();
+            //gets the park out of the list and assigns it to a single park.
             SelectedPark = SingleParkList[0];
-            
+            //takes the single park and assigns it to the parkdetails object to be passed to the detail page
             currentDetails.DetailPark = SelectedPark;
-            //IList<Weather> CurrentPark = weatherDAO.GetWeather(id);
+            //this takes the current condition of the isFahrenheit property in the parkdetails model and checks it against the session.
+            bool currentTempCondition = GetTemperatureDetails(currentDetails.IsFahrenheit);
+            //checks the model against the session
+            GetTemperatureDetails(currentTempCondition);
+            //get two lists of weather details; a fahrenheit one for making comparisons for giving weather advice, and a second for displaying user temp preference.
+            currentDetails.FahrenheitWeather = weatherDAO.GetWeather(id);
             currentDetails.AllWeather = weatherDAO.GetWeather(id);
+            //if the condition of the session/model is false, run the temperatures in the list through a converter
+            if(currentTempCondition == false)
+            {
+                currentDetails.AllWeather = currentDetails.ConvertTemp(currentDetails.AllWeather, currentTempCondition);
+            }
+            
             return View(currentDetails);
         }
 
@@ -95,34 +109,46 @@ namespace Capstone.Web.Controllers
             return View();
         }
 
-        private ParkDetails GetTemperatureDetails()
+        private bool GetTemperatureDetails(bool isFahrenheit)
         {
-            ParkDetails temp = null;
 
-            if(HttpContext.Session.GetString("Temperature")==null)
+            bool sessionState = false;
+            
+
+            if(HttpContext.Session.GetString("Temperature") != null)
             {
-                temp = new ParkDetails();
-                SaveTemperatureDetails(temp);
+               
+                string temperature_string = HttpContext.Session.GetString("Temperature");
+                sessionState = JsonConvert.DeserializeObject<bool>(temperature_string); 
+                if(sessionState != isFahrenheit)
+                {
+                    SaveTemperatureDetails(isFahrenheit);
+                }
+                else
+                {
+                    return isFahrenheit;
+                }
             }
             else
             {
-                string temperature_string = HttpContext.Session.GetString("Temperature");
-                temp = JsonConvert.DeserializeObject<ParkDetails>(temperature_string);
+                SaveTemperatureDetails(isFahrenheit);
             }
-            return temp;
+            return isFahrenheit;
         }
 
-        private void SaveTemperatureDetails (ParkDetails temp)
+        private void SaveTemperatureDetails (bool temp)
         {
             string temperature_string = JsonConvert.SerializeObject(temp);
             HttpContext.Session.SetString("Temperature", temperature_string);
         }
 
-        //    //we left off here.  the idea is to use the converter within the controller
-        //    public ActionResult SwitchTemperature (ParkDetails parkDetails, int temp)
-        //    {
-        //        parkDetails.AllWeather = weatherDAO.GetWeather()
-        //    }
+        //we don't think we need this method to accomplish what we are trying to do in the session, though one was present in the lecture code.
+        //public ActionResult SwitchTemperature (string id, bool isFahrenheit)
+        //{
+
+        //    temp.AllWeather = weatherDAO.GetWeather(id);
+
+        //}
 
         //    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         //    public IActionResult Error()

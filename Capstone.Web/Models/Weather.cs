@@ -24,13 +24,15 @@ namespace Capstone.Web.Models
         /// Low temperature, in int form and in Farenheit
         /// </summary>
         [Display(Name = "Low Temperature")]
-        public int Low { get; set; }
+        public double Low { get; set; }
+
+        //note that you changed the temperatures from int to double
 
         /// <summary>
         /// High temperature, in int form and in Farenheit
         /// </summary>
         [Display(Name = "High Temperature")]
-        public int High { get; set; }
+        public double High { get; set; }
 
         /// <summary>
         /// Description of the weather conditions
