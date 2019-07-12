@@ -35,6 +35,20 @@
 <div style="padding-bottom:40px">
     <h4 style="text-align:center">***Please note that the fee for entry to @Model.DetailPark.ParkName is $@Model.DetailPark.EntryFee***</h4>
 </div>
+<div>
+    <form asp-controller="home" asp-action="detail" asp-route-id="@(Model.DetailPark.ParkCode)" asp-route-IsFahrenheit="@(Model.IsFahrenheit)">
+        <div class="onoffswitch">
+            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="@(Model.IsFahrenheit)" checked>
+            <label class="onoffswitch-label" for="@(Model.IsFahrenheit)">
+                <span class="onoffswitch-inner"></span>
+                <span class="onoffswitch-switch"></span>
+            </label>
+        </div>
+        <div>
+            <input type="submit" value="Change Temperatures" />
+        </div>
+    </form>
+</div>
 <div style="display:flex">
     <div style="padding-right:20px">
         <h4 style="text-align:center">Today's Weather</h4>

@@ -9,6 +9,8 @@ namespace Capstone.Web.Models
     {
         public Park DetailPark { get; set; }
         public IList<Weather> AllWeather { get; set; }
+        public IList<Weather> FahrenheitWeather { get; set; }
+        public bool IsFahrenheit { get; set; }
         public Dictionary<string, string> WeatherAdvice = new Dictionary<string, string>()
         {
             {"snow", "Pack snow shoes." },
@@ -27,20 +29,36 @@ namespace Capstone.Web.Models
             {"Danger! Exposure to temperatures this low can cause frost bite." }
         };
 
-        public double ConvertTemp (double temperature)
+        public IList<Weather> ConvertTemp (IList<Weather> allWeather, bool isFahrenheit)
         {
-            double toCelcius = 5 / 9;
-            double toFahrenheit = 9 / 5;
-            //get value from session.  Add to if statement.  first is for converting to celcius.
-            if(temperature == 0)
+            double toCelcius = 5.0 / 9;
+            double toFahrenheit = 9.0 / 5;
+            
+            if(!isFahrenheit)
             {
-                temperature = (temperature - 32) * toCelcius;
+                foreach(var day in allWeather)
+                {
+                    day.High = Math.Round((day.High - 32) * toCelcius);
+                    day.Low = Math.Round((day.Low - 32) * toCelcius);
+                }
+                return allWeather;
             }
             else
             {
-                temperature = (temperature * toFahrenheit) + 32;
+                foreach(var day in allWeather)
+                {
+                    day.High = Math.Round((day.High * toFahrenheit) + 32);
+                    day.Low = Math.Round((day.Low * toFahrenheit) + 32);
+                }
+                return allWeather;
             }
-            return Math.Round(temperature);
+            
+        }
+
+        //this method needs to set the isFahrenheit property based on the action from the toggle button
+        public void SwitchTemperatures()
+        {
+           
         }
 
         //public string TemperatureAdice
