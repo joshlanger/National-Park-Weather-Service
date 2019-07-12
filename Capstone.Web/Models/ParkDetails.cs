@@ -34,7 +34,7 @@ namespace Capstone.Web.Models
             double toCelcius = 5.0 / 9;
             double toFahrenheit = 9.0 / 5;
             
-            if(!isFahrenheit)
+            if(isFahrenheit)
             {
                 foreach(var day in allWeather)
                 {

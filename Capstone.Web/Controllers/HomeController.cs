@@ -38,15 +38,30 @@ namespace Capstone.Web.Controllers
             return View(park);
         }
 
+        //this method should deal only with displaying the page, not with changing the temperature
+        //public IActionResult Detail(string id)
+        //{
+        //    return View();
+        //}
+
         //TODO is it ok to have all this logic in the controller?  some of it could be moved.
         /// <summary>
         /// Controls the Detail Page view of each park
         /// </summary>
         /// <param name="id">Passing in a parameter of Park Code</param>
         /// <returns>Returns a view of the Detail Page of the park that matched the parameter Park Code</returns>
+        
         public IActionResult Detail(string id, ParkDetails currentDetails)
         {
-            bool myonoffswitch = currentDetails.IsFahrenheit;
+            if(HttpContext.Session.GetString("Temperature") != null)
+            {
+                string temperature_string = HttpContext.Session.GetString("Temperature");
+                bool savedTempPreference = JsonConvert.DeserializeObject<bool>(temperature_string);
+                if(savedTempPreference != currentDetails.IsFahrenheit)
+                {
+                    currentDetails.IsFahrenheit = savedTempPreference;
+                }
+            }
             //uses the id from the park page that the user selected to get info on the specific park, putting it into a list with only one index.
             IList<Park> SingleParkList = parkDAO.GetSelectedPark(id);
             Park SelectedPark = new Park();
@@ -54,7 +69,9 @@ namespace Capstone.Web.Controllers
             SelectedPark = SingleParkList[0];
             //takes the single park and assigns it to the parkdetails object to be passed to the detail page
             currentDetails.DetailPark = SelectedPark;
+
             //this takes the current condition of the isFahrenheit property in the parkdetails model and checks it against the session.
+            //if the session is null, it writes the current condition to the session.
             bool currentTempCondition = GetTemperatureDetails(currentDetails.IsFahrenheit);
             //checks the model against the session
             GetTemperatureDetails(currentTempCondition);
@@ -62,7 +79,7 @@ namespace Capstone.Web.Controllers
             currentDetails.FahrenheitWeather = weatherDAO.GetWeather(id);
             currentDetails.AllWeather = weatherDAO.GetWeather(id);
             //if the condition of the session/model is false, run the temperatures in the list through a converter
-            if(currentTempCondition == false)
+            if(currentTempCondition == true)
             {
                 currentDetails.AllWeather = currentDetails.ConvertTemp(currentDetails.AllWeather, currentTempCondition);
             }
