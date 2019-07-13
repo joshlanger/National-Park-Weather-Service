@@ -8,7 +8,7 @@
     <div>
         <label asp-for="ParkCode"></label>
         <select asp-for="ParkCode" asp-items="Model.ParkCodes"></select>
-        <span asp-validation-for="ParkName" style="color:red"></span>
+        <span asp-validation-for="ParkCode" style="color:red"></span>
     </div>
     <div>
         <label asp-for="EmailAddress"></label>
@@ -22,11 +22,10 @@
     </div>
     <div>
         <label asp-for="ActivityLevel"></label><br>
-        <input type="radio" name="@Model.ActivityLevel" value="Inactive"> Inactive
-        <input type="radio" name="@Model.ActivityLevel" value="Sedentary"> Sedentary
-        <input type="radio" name="@Model.ActivityLevel" value="Active"> Active
-        <input type="radio" name="@Model.ActivityLevel" value="Extremely Active"> Extremely Active
-        <span asp-validation-for="ActivityLevel" style="color:red"></span>
+        <input type="radio" name="Activity" value="Inactive" checked="checked" /> Inactive
+        <input type="radio" name="Activity" value="Sedentary"/> Sedentary
+        <input type="radio" name="Activity" value="Active" /> Active
+        <input type="radio" name="Activity" value="Extremely Active" /> Extremely Active
     </div>
     <div>
         <input type="submit" value="Submit" />

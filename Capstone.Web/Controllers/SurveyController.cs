@@ -37,7 +37,7 @@ namespace Capstone.Web.Controllers
                 return View("Input", survey);
             }
             surveyDAO.AddSurvey(survey);
-            return RedirectToAction("Results", "Input");
+            return RedirectToAction("Results", "Input", new { survey.ParkCode, survey.EmailAddress, survey.State, survey.ActivityLevel });
         }
 
         [HttpGet]
