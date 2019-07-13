@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace Capstone.Web.Models
 {
-    public class ResultsViewModel
+    public class ResultsView
     {
-        public IDictionary<string, int> SurveyResults { get; set; }
+        public IList<Survey> SurveyResults { get; set; }
         public IList<Park> Parks { get; set; }
     }
 }

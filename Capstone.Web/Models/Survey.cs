@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Capstone.Web.Models
 {
-    public class SurveyResult
+    public class Survey
     {
         /// <summary>
         /// ID for survey
@@ -51,27 +51,31 @@ namespace Capstone.Web.Models
         //[Required]
         public string ActivityLevel { get; set; }
 
-        /// <summary>
-        /// List of survey results from the database
-        /// </summary>
-        public IList<SurveyResult> AllSurveys { get; set; }
+        ///// <summary>
+        ///// List of survey results from the database
+        ///// </summary>
+        //public IList<Survey> AllSurveys { get; set; }
 
-        public IList<SurveyResult> Names { get; set; }
+        //public IList<Survey> Names { get; set; }
 
-        public IList<SelectListItem> ParkNames = new List<SelectListItem>()
-            {
-            new SelectListItem { Text = "Inactive", Value = "Inactive" },
-            new SelectListItem { Text = "Sedentary", Value = "Sedentary" },
-            new SelectListItem { Text = "Active", Value = "Active" },
-            new SelectListItem { Text = "Extremely Active", Value = "Extremely Active}" }
-        };
+        //public IList<SelectListItem> ParkNames = new List<SelectListItem>()
+        //    {
+        //    new SelectListItem { Text = "Inactive", Value = "Inactive" },
+        //    new SelectListItem { Text = "Sedentary", Value = "Sedentary" },
+        //    new SelectListItem { Text = "Active", Value = "Active" },
+        //    new SelectListItem { Text = "Extremely Active", Value = "Extremely Active}" }
+        //};
 
-        public IList<SelectListItem> ActivityLevels = new List<SelectListItem>()
-        {
-            new SelectListItem { Text = "Inactive", Value = "Inactive" },
-            new SelectListItem { Text = "Sedentary", Value = "Sedentary" },
-            new SelectListItem { Text = "Active", Value = "Active" },
-            new SelectListItem { Text = "Extremely Active", Value = "Extremely Active}" }
-        };
+        //public IList<SelectListItem> ActivityLevels = new List<SelectListItem>()
+        //{
+        //    new SelectListItem { Text = "Inactive", Value = "Inactive" },
+        //    new SelectListItem { Text = "Sedentary", Value = "Sedentary" },
+        //    new SelectListItem { Text = "Active", Value = "Active" },
+        //    new SelectListItem { Text = "Extremely Active", Value = "Extremely Active}" }
+        //};
+
+        public List<SelectListItem> ParkCodes { get; set; }
+
+        public List<SelectListItem> SelectActivityLevel { get; set; }
     }
 }

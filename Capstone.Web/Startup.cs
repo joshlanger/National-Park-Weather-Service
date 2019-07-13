@@ -44,7 +44,7 @@ namespace Capstone.Web
 
             // Added a scoped instance of the database tables
             services.AddScoped<IParkDAO, ParkSqlDAO>(p => new ParkSqlDAO(connectionString));
-            services.AddScoped<ISurveyResultDAO, SurveyResultSqlDAO>(s => new SurveyResultSqlDAO(connectionString));
+            services.AddScoped<ISurveyDAO, SurveySqlDAO>(s => new SurveySqlDAO(connectionString));
             services.AddScoped<IWeatherDAO, WeatherSqlDAO>(w => new WeatherSqlDAO(connectionString));
 
 

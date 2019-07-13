@@ -1,12 +1,12 @@
-﻿@model SurveyResult
+﻿@model Survey
 @{
     ViewData["Title"] = "Survey";
 }
 
 <h2>Survey</h2>
-<form asp-controller="Survey" asp-action="Survey" method="post">
-    <label asp-for="ParkName"></label>
-    <select asp-for="ParkName" asp-items="Model.ParkNames"></select>
+<form asp-controller="Survey" asp-action="Input" method="post">
+    <label asp-for="ParkCode"></label>
+    <select asp-for="ParkCode" asp-items="Model.ParkCodes"></select>
     <span asp-validation-for="ParkName" style="color:red"></span>
     <label asp-for="EmailAddress"></label>
     <input type="email" asp-for="EmailAddress" />

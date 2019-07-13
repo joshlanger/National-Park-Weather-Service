@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace Capstone.Web.DAO
 {
-    public interface ISurveyResultDAO
+    public interface ISurveyDAO
     {
         /// <summary>
         /// Inteface for the Park SQL DAO
         /// </summary>
         /// <returns></returns>
-        IDictionary<string, int> GetSurveys();
-        void AddSurvey(SurveyResult survey);
+        IList<Survey> GetSurveyResults();
+        void AddSurvey(Survey survey);
     }
 }
