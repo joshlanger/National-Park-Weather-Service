@@ -56,15 +56,13 @@ namespace Capstone.Web.DAO
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    string cmd = "INSERT INTO survey_result VALUES (@parkCode, @emailAddress, @state, @activityLevel)";
-                    conn.Query(cmd, new
-                    {
-                        parkCode = survey.ParkCode,
-                        emailAddress = survey.EmailAddress,
-                        state = survey.State,
-                        activityLevel = survey.ActivityLevel
-                    });
-                    
+                    SqlCommand cmd = new SqlCommand("INSERT INTO survey_result VALUES (@parkCode, @emailAddress, @state, @activityLevel);", conn);
+                    cmd.Parameters.AddWithValue("@parkCode", survey.ParkCode);
+                    cmd.Parameters.AddWithValue("@emailAddress", survey.EmailAddress);
+                    cmd.Parameters.AddWithValue("@state", survey.State);
+                    cmd.Parameters.AddWithValue("@activityLevel", survey.ActivityLevel);
+
+                    cmd.ExecuteNonQuery();
                 }
             }
             catch(SqlException)
