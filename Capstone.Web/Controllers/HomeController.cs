@@ -146,10 +146,8 @@ namespace Capstone.Web.Controllers
         //updates the session to reflect a new preference if necessary.
         private bool CompareTemperatureDetails(bool isFahrenheit)
         {
-
             bool sessionState = false;
             
-
             if(HttpContext.Session.GetString("Temperature") != null)
             {
                

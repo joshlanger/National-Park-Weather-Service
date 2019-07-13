@@ -1,7 +1,13 @@
-﻿
+﻿@model ResultsView
 @{
     ViewData["Title"] = "Favorite";
 }
 
 <h2>Favorite</h2>
+
+@*NOT SURE HOW YOU WANT TO HANDLE THIS PAGE.  I JUST PUT THIS HERE FOR TEST PURPOSES*@
+@foreach(var survey in Model.SurveyResults)
+{
+    <p>@survey.ParkCode</p>
+}
 

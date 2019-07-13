@@ -37,7 +37,8 @@ namespace Capstone.Web.Controllers
                 return View("Input", survey);
             }
             surveyDAO.AddSurvey(survey);
-            return RedirectToAction("Results", "Input");
+            //CHANGED THE REDIRECT FROM ("RESULTS", "INPUT") TO "RESULTS"
+            return RedirectToAction("Results");
         }
 
         [HttpGet]
@@ -49,7 +50,8 @@ namespace Capstone.Web.Controllers
                 SurveyResults = SurveyResults,
                 Parks = parkDAO.GetParks(),
             };
-            return View("Results", surveyModel);
+            return View(surveyModel);
+            //REMOVED "RESULTS" FROM THE RETURN VIEW STATEMENT
         }
     }
 }

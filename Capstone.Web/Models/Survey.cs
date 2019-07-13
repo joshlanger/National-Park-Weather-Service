@@ -1,4 +1,5 @@
 ﻿using Capstone.Web.DAO;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,8 @@ namespace Capstone.Web.Models
         /// <summary>
         /// Alpha Park code from Park table
         /// </summary>
+        /// ADDED REQUIRED HERE
+        [Required]
         [Display(Name = "Park Code")]
         public string ParkCode { get; set; }
 
@@ -26,7 +29,7 @@ namespace Capstone.Web.Models
         /// Park name obtained through SQL table join
         /// </summary>
         [Display(Name ="Favorite National Park")]
-        [Required]
+        // REMOVED REQUIRED HERE
         public string ParkName { get; set; }
 
         /// <summary>
@@ -49,7 +52,10 @@ namespace Capstone.Web.Models
         /// </summary>
         [Display(Name ="Activity Level")]
         //[Required]
+        //ADDED AN ARRAY OF OPTIONS FOR ACTIVITY LEVEL
+        [BindProperty]
         public string ActivityLevel { get; set; }
+        public string[] ActivityLevels = new[] { "Inactive", "Sedentary", "Active", "Extremely Active" };
 
         public IList<SelectListItem> ParkCodes { get; set; }
 

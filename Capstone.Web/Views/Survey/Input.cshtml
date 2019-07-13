@@ -8,7 +8,8 @@
     <div>
         <label asp-for="ParkCode"></label>
         <select asp-for="ParkCode" asp-items="Model.ParkCodes"></select>
-        <span asp-validation-for="ParkName" style="color:red"></span>
+        <span asp-validation-for="ParkCode" style="color:red"></span>
+        @*the above was changed from ParkName to ParkCode*@
     </div>
     <div>
         <label asp-for="EmailAddress"></label>
@@ -21,11 +22,16 @@
         <span asp-validation-for="State" style="color:red"></span>
     </div>
     <div>
-        <label asp-for="ActivityLevel"></label><br>
-        <input type="radio" name="@Model.ActivityLevel" value="Inactive"> Inactive
-        <input type="radio" name="@Model.ActivityLevel" value="Sedentary"> Sedentary
-        <input type="radio" name="@Model.ActivityLevel" value="Active"> Active
-        <input type="radio" name="@Model.ActivityLevel" value="Extremely Active"> Extremely Active
+        @foreach(var activitylevel in Model.ActivityLevels)
+        { 
+            <input type="radio" asp-for="ActivityLevel" value="@activitylevel"/>@activitylevel<br/>
+        }
+        @*<label asp-for="ActivityLevel"></label><br>*@
+        @*CHANGE THE NAME FIELD BELOW FROM UNIQUE TO SAME FOR EACH*@
+        @*<input type="radio" name="activity_level" value="Inactive"> Inactive
+        <input type="radio" name="activity_level" value="Sedentary"> Sedentary
+        <input type="radio" name="activity_level" value="Active"> Active
+        <input type="radio" name="activity_level" value="Extremely Active"> Extremely Active*@
         <span asp-validation-for="ActivityLevel" style="color:red"></span>
     </div>
     <div>
