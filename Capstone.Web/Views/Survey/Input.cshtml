@@ -5,21 +5,31 @@
 
 <h2>Survey</h2>
 <form asp-controller="Survey" asp-action="Input" method="post">
-    <label asp-for="ParkCode"></label>
-    <select asp-for="ParkCode" asp-items="Model.ParkCodes"></select>
-    <span asp-validation-for="ParkName" style="color:red"></span>
-    <label asp-for="EmailAddress"></label>
-    <input type="email" asp-for="EmailAddress" />
-    <span asp-validation-for="EmailAddress" style="color:red"></span>
-    <label asp-for="State"></label>
-    <input type="text" asp-for="State" />
-    <span asp-validation-for="State" style="color:red"></span>
-    <label asp-for="ActivityLevel"></label>
-    <input type="radio" name="@Model.ActivityLevel" value="Inactive"> Inactive<br>
-    <input type="radio" name="@Model.ActivityLevel" value="Sedentary"> Sedentary<br>
-    <input type="radio" name="@Model.ActivityLevel" value="Active"> Active<br>
-    <input type="radio" name="@Model.ActivityLevel" value="Extremely Active"> Extremely Active<br>
-    <span asp-validation-for="ActivityLevel" style="color:red"></span>
-    <input type="submit" value="Submit" />
+    <div>
+        <label asp-for="ParkCode"></label>
+        <select asp-for="ParkCode" asp-items="Model.ParkCodes"></select>
+        <span asp-validation-for="ParkName" style="color:red"></span>
+    </div>
+    <div>
+        <label asp-for="EmailAddress"></label>
+        <input type="email" asp-for="EmailAddress" />
+        <span asp-validation-for="EmailAddress" style="color:red"></span>
+    </div>
+    <div>
+        <label asp-for="State"></label>
+        <select asp-for="State" asp-items="Model.States"></select>
+        <span asp-validation-for="State" style="color:red"></span>
+    </div>
+    <div>
+        <label asp-for="ActivityLevel"></label><br>
+        <input type="radio" name="@Model.ActivityLevel" value="Inactive"> Inactive
+        <input type="radio" name="@Model.ActivityLevel" value="Sedentary"> Sedentary
+        <input type="radio" name="@Model.ActivityLevel" value="Active"> Active
+        <input type="radio" name="@Model.ActivityLevel" value="Extremely Active"> Extremely Active
+        <span asp-validation-for="ActivityLevel" style="color:red"></span>
+    </div>
+    <div>
+        <input type="submit" value="Submit" />
+    </div>
 </form>
 
