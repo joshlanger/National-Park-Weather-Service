@@ -43,7 +43,6 @@ namespace Capstone.Web.DAO
                 throw;
             }
             return AllSurveys;
-            
         }
 
         /// <summary>
@@ -72,6 +71,23 @@ namespace Capstone.Web.DAO
             {
                 throw;
             }
+        }
+
+        public IList<SelectListItem> ParkCodes()
+        {
+            IList<SelectListItem> ParkCodes = new List<SelectListItem>();
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("SELECT parkCode, parkName from park;", conn);
+                SqlDataReader reader = cmd.ExecuteReader();
+                while(reader.Read())
+                {
+                    ParkCodes.Add(new SelectListItem() { Text = Convert.ToString(reader["parkName"]), Value = Convert.ToString(reader["parkCode"]) });
+                }
+            }
+            return ParkCodes;
         }
     }
 }

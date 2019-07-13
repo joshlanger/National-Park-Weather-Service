@@ -15,5 +15,6 @@ namespace Capstone.Web.DAO
         /// <returns></returns>
         IList<Survey> GetSurveyResults();
         void AddSurvey(Survey survey);
+        IList<SelectListItem> ParkCodes();
     }
 }
