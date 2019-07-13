@@ -8,6 +8,7 @@ using Capstone.Web.Models;
 using Capstone.Web.DAO;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
 
 namespace Capstone.Web.Controllers
 {
@@ -38,30 +39,12 @@ namespace Capstone.Web.Controllers
             return View(park);
         }
 
-        //this method should deal only with displaying the page, not with changing the temperature
-        //public IActionResult Detail(string id)
-        //{
-        //    return View();
-        //}
-
-        //TODO is it ok to have all this logic in the controller?  some of it could be moved.
-        /// <summary>
-        /// Controls the Detail Page view of each park
-        /// </summary>
-        /// <param name="id">Passing in a parameter of Park Code</param>
-        /// <returns>Returns a view of the Detail Page of the park that matched the parameter Park Code</returns>
-        
-        public IActionResult Detail(string id, ParkDetails currentDetails)
+        //this method is called to load the details page by default
+        [HttpGet]
+        public IActionResult Detail(string id)
         {
-            if(HttpContext.Session.GetString("Temperature") != null)
-            {
-                string temperature_string = HttpContext.Session.GetString("Temperature");
-                bool savedTempPreference = JsonConvert.DeserializeObject<bool>(temperature_string);
-                if(savedTempPreference != currentDetails.IsFahrenheit)
-                {
-                    currentDetails.IsFahrenheit = savedTempPreference;
-                }
-            }
+            ParkDetails currentDetails = new ParkDetails();
+            currentDetails.IsFahrenheit = AccessTemperatureDetails();
             //uses the id from the park page that the user selected to get info on the specific park, putting it into a list with only one index.
             IList<Park> SingleParkList = parkDAO.GetSelectedPark(id);
             Park SelectedPark = new Park();
@@ -69,21 +52,54 @@ namespace Capstone.Web.Controllers
             SelectedPark = SingleParkList[0];
             //takes the single park and assigns it to the parkdetails object to be passed to the detail page
             currentDetails.DetailPark = SelectedPark;
+            currentDetails.FahrenheitWeather = weatherDAO.GetWeather(id);
+            currentDetails.AllWeather = weatherDAO.GetWeather(id);
+            if (currentDetails.IsFahrenheit == true)
+            {
+                currentDetails.AllWeather = currentDetails.ConvertTemp(currentDetails.AllWeather, currentDetails.IsFahrenheit);
+            }
+            return View(currentDetails);
+        }
 
-            //this takes the current condition of the isFahrenheit property in the parkdetails model and checks it against the session.
-            //if the session is null, it writes the current condition to the session.
-            bool currentTempCondition = GetTemperatureDetails(currentDetails.IsFahrenheit);
-            //checks the model against the session
-            GetTemperatureDetails(currentTempCondition);
+        //the below was an attempt to refactor.  it's not working because the route values aren't coming through
+        //i'm not sure whether objects can be passed in a redirect or just strings.
+        //public IActionResult ChangeTemperaturePreference(string id, ParkDetails currentDetails)
+        //{
+        //    bool currentTempCondition = GetTemperatureDetails(currentDetails.IsFahrenheit);
+        //    currentDetails.IsFahrenheit = currentTempCondition;
+        //    TempData["currentDetails"] = currentDetails;
+
+        //    return RedirectToAction("Detail", "home", id);
+        //}
+
+        //TODO is it ok to have all this logic in the controller?  some of it could be moved.
+
+        //this method only gets called if the user changes their temperature preference
+        [HttpPost]
+        public IActionResult Detail(string id, ParkDetails currentDetails)
+        {
+            //compares the current user choice agains the user choice saved in the session, updating it if necessary
+            bool currentTempCondition = CompareTemperatureDetails(currentDetails.IsFahrenheit);
+            //assigns the value from the session to the model.
+            currentDetails.IsFahrenheit = currentTempCondition;
+
+            //uses the id from the park page that the user selected to get info on the specific park, putting it into a list with only one index.
+            IList<Park> SingleParkList = parkDAO.GetSelectedPark(id);
+            Park SelectedPark = new Park();
+            //gets the park out of the list and assigns it to a single park.
+            SelectedPark = SingleParkList[0];
+            //takes the single park and assigns it to the parkdetails object to be passed to the detail page
+            currentDetails.DetailPark = SelectedPark;
+      
             //get two lists of weather details; a fahrenheit one for making comparisons for giving weather advice, and a second for displaying user temp preference.
             currentDetails.FahrenheitWeather = weatherDAO.GetWeather(id);
             currentDetails.AllWeather = weatherDAO.GetWeather(id);
             //if the condition of the session/model is false, run the temperatures in the list through a converter
-            if(currentTempCondition == true)
+            if (currentTempCondition == true)
             {
                 currentDetails.AllWeather = currentDetails.ConvertTemp(currentDetails.AllWeather, currentTempCondition);
             }
-            
+
             return View(currentDetails);
         }
 
@@ -125,8 +141,10 @@ namespace Capstone.Web.Controllers
         {
             return View();
         }
-
-        private bool GetTemperatureDetails(bool isFahrenheit)
+        
+        //accesses the session to compare current temperature preference vs. a saved preference.
+        //updates the session to reflect a new preference if necessary.
+        private bool CompareTemperatureDetails(bool isFahrenheit)
         {
 
             bool sessionState = false;
@@ -153,24 +171,32 @@ namespace Capstone.Web.Controllers
             return isFahrenheit;
         }
 
+        //helper method that saves temperature preference bool to the session.
         private void SaveTemperatureDetails (bool temp)
         {
             string temperature_string = JsonConvert.SerializeObject(temp);
             HttpContext.Session.SetString("Temperature", temperature_string);
         }
 
-        //we don't think we need this method to accomplish what we are trying to do in the session, though one was present in the lecture code.
-        //public ActionResult SwitchTemperature (string id, bool isFahrenheit)
-        //{
+        //reads the temperature preference from the session
+        private bool AccessTemperatureDetails()
+        {
+            bool sessionState = false;
 
-        //    temp.AllWeather = weatherDAO.GetWeather(id);
 
-        //}
+            if (HttpContext.Session.GetString("Temperature") != null)
+            {
 
-        //    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        //    public IActionResult Error()
-        //    {
-        //        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        //    }
+                string temperature_string = HttpContext.Session.GetString("Temperature");
+                sessionState = JsonConvert.DeserializeObject<bool>(temperature_string);
+            }
+            return sessionState;
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
     }
 }

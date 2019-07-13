@@ -7,7 +7,7 @@
 @foreach(Park park in Model.AllParks)
 {
 <div style="display:flex; justify-content:space-around; padding:20px">
-    <a asp-controller="Home" asp-action="Detail" asp-route-id="@(park.ParkCode)">
+    <a asp-controller="Home" asp-action="Detail" asp-route-id="@(park.ParkCode)" method="get">
         <img style="padding-right:20px" src="~/images/@(park.ParkCode).jpg" />
     </a>
         <div style="display:flex; flex-direction:column; justify-content:space-between">

@@ -36,7 +36,7 @@
     <h4 style="text-align:center">***Please note that the fee for entry to @Model.DetailPark.ParkName is $@Model.DetailPark.EntryFee***</h4>
 </div>
 <div>
-    <form asp-controller="home" asp-action="detail" asp-route-id="@(Model.DetailPark.ParkCode)" method="get">
+    <form asp-controller="home" asp-action="detail" asp-route-id="@(Model.DetailPark.ParkCode)" method="post">
         <input asp-for="IsFahrenheit"/>
     @*<div class="onoffswitch">
             <input type="checkbox" name="IsFahrenheit" class="onoffswitch-checkbox" id="IsFahrenheit" value="true" checked>
