@@ -7,7 +7,7 @@ namespace Capstone.Web.Models
 {
     public class ResultsView
     {
-        public IList<Survey> SurveyResults { get; set; }
-        public IList<Park> Parks { get; set; }
+        public IList<Survey> AllSurveys { get; set; }
+        public IList<Park> AllParks { get; set; }
     }
 }

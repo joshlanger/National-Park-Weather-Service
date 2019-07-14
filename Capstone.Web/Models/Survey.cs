@@ -57,6 +57,8 @@ namespace Capstone.Web.Models
         public string ActivityLevel { get; set; }
         public string[] ActivityLevels = new[] { "Inactive", "Sedentary", "Active", "Extremely Active" };
 
+        public int Votes { get; set; }
+
         public IList<SelectListItem> ParkCodes { get; set; }
 
         public IList<SelectListItem> States = new List<SelectListItem>()

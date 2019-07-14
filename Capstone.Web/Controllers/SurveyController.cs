@@ -47,8 +47,8 @@ namespace Capstone.Web.Controllers
             IList<Survey> SurveyResults = surveyDAO.GetSurveyResults();
             ResultsView surveyModel = new ResultsView()
             {
-                SurveyResults = SurveyResults,
-                Parks = parkDAO.GetParks(),
+                AllSurveys = surveyDAO.GetSurveyResults(),
+                AllParks = parkDAO.GetParks(),
             };
             return View(surveyModel);
             //REMOVED "RESULTS" FROM THE RETURN VIEW STATEMENT

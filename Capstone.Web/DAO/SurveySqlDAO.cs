@@ -34,7 +34,7 @@ namespace Capstone.Web.DAO
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    string cmd = "SELECT COUNT(*) as votes, parkCode FROM survey_result GROUP BY parkCode ORDER BY votes DESC, parkCode;";
+                    string cmd = "SELECT COUNT(*) as votes, survey_result.parkCode, parkName FROM survey_result JOIN park on survey_result.parkCode = park.parkCode GROUP BY parkName, survey_result.parkCode ORDER BY votes DESC, survey_result.parkCode;";
                     AllSurveys = conn.Query<Survey>(cmd).ToList();
                 }
             }
