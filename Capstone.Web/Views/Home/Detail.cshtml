@@ -35,26 +35,26 @@
 <div style="padding-bottom:40px">
     <h4 style="text-align:center">***Please note that the fee for entry to @Model.DetailPark.ParkName is $@Model.DetailPark.EntryFee***</h4>
 </div>
-<div style="display:flex; justify-content: center; padding-bottom:20px">
-    <form asp-controller="home" asp-action="detail" asp-route-id="@(Model.DetailPark.ParkCode)" method="post">
-        @*<input asp-for="IsFahrenheit" />*@
+<div style="display:flex; justify-content:center; padding-bottom:20px">
+    <form asp-controller="home" asp-action="detail" asp-route-id="@(Model.DetailPark.ParkCode)" method="post">        
         <div class="onoffswitch">
-            @Html.CheckBoxFor(Model => Model.IsFahrenheit, new { @name = "myonoffswitch", @class="onoffswitch-checkbox", @id="myonoffswitch", @checked="checked"})
+            @Html.CheckBoxFor(Model => Model.IsCelsius, new { @name = "myonoffswitch", @class="onoffswitch-checkbox", @id="myonoffswitch", @checked="checked"})
             <label class="onoffswitch-label" for="myonoffswitch">
                 <span class="onoffswitch-inner"></span>
                 <span class="onoffswitch-switch"></span>
             </label>
         </div>
         <div>
-            <input type="submit" class="onoffswitch-label" style="background-color:#34A7C1; color:white;" value="Change Temperature Scale" />
+            <input type="submit" class="onoffswitch-label" style="background-color:#34A7C1; color:white;" value="Submit Scale Change" />
         </div>
     </form>
 </div>
 <div style="display:flex">
-    <div style="padding-right:20px">
+    <div style="padding-right:20px; display:flex; flex-direction:column; align-items:center">
         <h4 style="text-align:center">Today's Weather</h4>
         <img src="~/images/@(Model.AllWeather[0].Forecast).png" />
-        <p style="text-align: center">High: @Model.AllWeather[0].High   Low: @Model.AllWeather[0].Low</p>
+        <p style="text-align: center"><l style="padding-right:10px"> High: <b>@Model.AllWeather[0].High @if (!Model.IsCelsius) { @Model.Degrees[0] } else {@Model.Degrees[1]}</b></l> 
+           Low: <b>@Model.AllWeather[0].Low @if (!Model.IsCelsius) { @Model.Degrees[0] } else {@Model.Degrees[1]}</b></p>
         <p style="text-align:center">@Model.WeatherAdvice[Model.AllWeather[0].Forecast]
         @if(Model.FahrenheitWeather[0].High > 75)
         {
@@ -77,9 +77,11 @@
             {
                 if (day.FiveDayForecastValue != 1)
                 {
-                    <div>
+                    <div style="display:flex; flex-direction:column; align-items:center">
+                        
                         <img style="width:50%" src="~/images/@(day.Forecast).png" />
-                        <p>High: @day.High   Low: @day.Low</p>
+                        <p>High: <b>@day.High @if (!Model.IsCelsius) { @Model.Degrees[0] } else {@Model.Degrees[1]} </b></p>
+                        <p>Low: <b>@day.Low @if (!Model.IsCelsius) { @Model.Degrees[0] } else {@Model.Degrees[1]}</b></p>
                     </div>
                 }
             }

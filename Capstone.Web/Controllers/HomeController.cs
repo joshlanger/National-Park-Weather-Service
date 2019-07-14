@@ -44,7 +44,7 @@ namespace Capstone.Web.Controllers
         public IActionResult Detail(string id)
         {
             ParkDetails currentDetails = new ParkDetails();
-            currentDetails.IsFahrenheit = AccessTemperatureDetails();
+            currentDetails.IsCelsius = AccessTemperatureDetails();
             //uses the id from the park page that the user selected to get info on the specific park, putting it into a list with only one index.
             IList<Park> SingleParkList = parkDAO.GetSelectedPark(id);
             Park SelectedPark = new Park();
@@ -54,9 +54,9 @@ namespace Capstone.Web.Controllers
             currentDetails.DetailPark = SelectedPark;
             currentDetails.FahrenheitWeather = weatherDAO.GetWeather(id);
             currentDetails.AllWeather = weatherDAO.GetWeather(id);
-            if (currentDetails.IsFahrenheit == true)
+            if (currentDetails.IsCelsius == true)
             {
-                currentDetails.AllWeather = currentDetails.ConvertTemp(currentDetails.AllWeather, currentDetails.IsFahrenheit);
+                currentDetails.AllWeather = currentDetails.ConvertTemp(currentDetails.AllWeather, currentDetails.IsCelsius);
             }
             return View(currentDetails);
         }
@@ -79,9 +79,9 @@ namespace Capstone.Web.Controllers
         public IActionResult Detail(string id, ParkDetails currentDetails)
         {
             //compares the current user choice agains the user choice saved in the session, updating it if necessary
-            bool currentTempCondition = CompareTemperatureDetails(currentDetails.IsFahrenheit);
+            bool currentTempCondition = CompareTemperatureDetails(currentDetails.IsCelsius);
             //assigns the value from the session to the model.
-            currentDetails.IsFahrenheit = currentTempCondition;
+            currentDetails.IsCelsius = currentTempCondition;
 
             //uses the id from the park page that the user selected to get info on the specific park, putting it into a list with only one index.
             IList<Park> SingleParkList = parkDAO.GetSelectedPark(id);

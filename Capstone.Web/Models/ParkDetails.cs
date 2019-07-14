@@ -10,7 +10,9 @@ namespace Capstone.Web.Models
         public Park DetailPark { get; set; }
         public IList<Weather> AllWeather { get; set; }
         public IList<Weather> FahrenheitWeather { get; set; }
-        public bool IsFahrenheit { get; set; }
+        public bool IsCelsius { get; set; }
+        public string[] Degrees = new[] { "°F", "°C" };
+
         public Dictionary<string, string> WeatherAdvice = new Dictionary<string, string>()
         {
             {"snow", "Pack snow shoes." },
