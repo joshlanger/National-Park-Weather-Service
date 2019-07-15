@@ -10,7 +10,6 @@
         <label asp-for="ParkCode">Park Name</label>
         <select asp-for="ParkCode" asp-items="Model.ParkCodes"></select>
         <span asp-validation-for="ParkCode" style="color:red"></span>
-        @*the above was changed from ParkName to ParkCode*@
     </div>
     <div>
         <label asp-for="EmailAddress"></label>
@@ -27,12 +26,6 @@
         { 
             <input type="radio" asp-for="ActivityLevel" value="@activitylevel"/>@activitylevel<br/>
         }
-        @*<label asp-for="ActivityLevel"></label><br>*@
-        @*CHANGE THE NAME FIELD BELOW FROM UNIQUE TO SAME FOR EACH*@
-        @*<input type="radio" name="activity_level" value="Inactive"> Inactive
-        <input type="radio" name="activity_level" value="Sedentary"> Sedentary
-        <input type="radio" name="activity_level" value="Active"> Active
-        <input type="radio" name="activity_level" value="Extremely Active"> Extremely Active*@
         <span asp-validation-for="ActivityLevel" style="color:red"></span>
     </div>
     <div>

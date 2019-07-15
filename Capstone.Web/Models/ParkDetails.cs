@@ -57,40 +57,6 @@ namespace Capstone.Web.Models
             
         }
 
-        //this method needs to set the isFahrenheit property based on the action from the toggle button
-        public void SwitchTemperatures()
-        {
-           
-        }
-
-        //public string TemperatureAdice
-        //{
-        //    get
-        //    { if(this.AllWeather[0].High > 76)
-        //        {
-        //            return "Bring an extra gallon of water";
-                          
-        //        }
-        //    if(AllWeather[0].Low < 20)
-        //        {
-        //            return "Danger! Exposure to temperatures this low can cause frost bite";
-        //        }
-        //    if((AllWeather[0].High - AllWeather[0].Low) > 20)
-        //        {
-        //            return "Wear breathable layers";
-        //        }
-        //        return "";
-        //            }
-        //}
-
-        //public Dictionary<int, string> TemperatureAdvice = new Dictionary<int, string>()
-        //{
-        //    {76, "Bring an extra gallon of water" },
-        //    {21, "Wear breathable layers" },
-        //    {19, "Danger! Exposure to temperatures this low can cause frost bite" }
-        //};
-            
-        
-
+       
     }
 }

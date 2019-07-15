@@ -61,19 +61,6 @@ namespace Capstone.Web.Controllers
             return View(currentDetails);
         }
 
-        //the below was an attempt to refactor.  it's not working because the route values aren't coming through
-        //i'm not sure whether objects can be passed in a redirect or just strings.
-        //public IActionResult ChangeTemperaturePreference(string id, ParkDetails currentDetails)
-        //{
-        //    bool currentTempCondition = GetTemperatureDetails(currentDetails.IsFahrenheit);
-        //    currentDetails.IsFahrenheit = currentTempCondition;
-        //    TempData["currentDetails"] = currentDetails;
-
-        //    return RedirectToAction("Detail", "home", id);
-        //}
-
-        //TODO is it ok to have all this logic in the controller?  some of it could be moved.
-
         //this method only gets called if the user changes their temperature preference
         [HttpPost]
         public IActionResult Detail(string id, ParkDetails currentDetails)
@@ -103,35 +90,7 @@ namespace Capstone.Web.Controllers
             return View(currentDetails);
         }
 
-        ///// <summary>
-        ///// Controls the Survey Page view
-        ///// </summary>
-        ///// <returns>Returns a view of the Survey Page</returns>
-        //[HttpGet]
-        //public IActionResult Survey()
-        //{
-        //    SurveyResult surveyResult = new SurveyResult();
-        //    surveyResult.Names = surveyResultDAO.GetParkNames();
-        //    return View(surveyResult);
-        //}
-
-        ///// <summary>
-        ///// Controls the posting of the Survey back to the database
-        ///// </summary>
-        ///// <param name="survey">Passing in the parameter of a survey</param>
-        ///// <returns>Redirects to the Favorite Park survey result Page and updates the database</returns>
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult Survey(SurveyResult survey)
-        //{
-        //    if(!ModelState.IsValid)
-        //    {
-        //        return View(survey);
-        //    }
-        //    surveyResultDAO.AddSurvey(survey);
-        //    return RedirectToAction("Favorite", "Home");
-        //}
-
+        
         /// <summary>
         /// Controls the Favorite Park Page view
         /// </summary>
