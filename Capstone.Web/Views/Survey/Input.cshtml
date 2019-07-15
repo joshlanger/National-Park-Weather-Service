@@ -4,9 +4,10 @@
 }
 
 <h2>Survey</h2>
+<h4>Which national park is number one?  Fill in the information below to cast your vote!</h4>
 <form asp-controller="Survey" asp-action="Input" method="post">
     <div>
-        <label asp-for="ParkCode"></label>
+        <label asp-for="ParkCode">Park Name</label>
         <select asp-for="ParkCode" asp-items="Model.ParkCodes"></select>
         <span asp-validation-for="ParkCode" style="color:red"></span>
         @*the above was changed from ParkName to ParkCode*@
