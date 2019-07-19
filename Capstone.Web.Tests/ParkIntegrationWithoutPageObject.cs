@@ -31,8 +31,29 @@ namespace Capstone.Web.Tests
         [TestMethod]
         public void ElementsExistOnPage()
         {
+            IWebElement header = webDriver.FindElement(By.TagName("head"));
+            IWebElement footer = webDriver.FindElement(By.TagName("footer"));
             IWebElement grandCanyonImg = webDriver.FindElement(By.Id("GCNP"));
+            Assert.IsNotNull(header);
+            Assert.IsNotNull(footer);
             Assert.IsTrue(grandCanyonImg.Displayed);
+        }
+
+        [TestMethod]
+        public void DetailNavigationLinkWorksCorrectly()
+        {
+            IWebElement detailPageLink = webDriver.FindElement(By.Id("GCNP"));
+            detailPageLink.Click();
+            Assert.IsTrue(webDriver.Url.Contains("/Home/Detail/GCNP"));
+
+        }
+
+        [TestMethod]
+        public void SurveyNavigationLinkWorksCorrectly()
+        {
+            IWebElement inputPageLink = webDriver.FindElement(By.LinkText("Survey"));
+            inputPageLink.Click();
+            Assert.IsTrue(webDriver.Title.Contains("Survey"));
         }
     }
 }

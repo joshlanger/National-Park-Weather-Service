@@ -20,7 +20,7 @@ namespace Capstone.Web.Tests
             using (SqlConnection conn = new SqlConnection(ConnectionString))
             {
                 conn.Open();
-                string cmd = "DELTE FROM weather, DELETE FROM survey_result, DELETE FROM park;";
+                string cmd = "DELETE FROM weather; DELETE FROM survey_result; DELETE FROM park;";
                 SqlCommand command = new SqlCommand(cmd, conn);
                 command.ExecuteNonQuery();
                 cmd = "INSERT INTO park VALUES('ARCH', 'Arches National Park', 'Utah', 47389, 7000, 200, 100, 'Desert', 1929, 1284767, 'This place is great!', 'Joseph Laneve', 'A lot of sandstone arches here', 10, 500;";

@@ -7,21 +7,26 @@
 <h4>Which national park is number one?  Fill in the information below to cast your vote!</h4>
 <form asp-controller="Survey" asp-action="Input" method="post">
     <div>
+        <p></p>
         <label asp-for="ParkCode">Park Name</label>
         <select asp-for="ParkCode" asp-items="Model.ParkCodes"></select>
         <span asp-validation-for="ParkCode" style="color:red"></span>
     </div>
     <div>
+        <p></p>
         <label asp-for="EmailAddress"></label>
         <input type="email" asp-for="EmailAddress" />
         <span asp-validation-for="EmailAddress" style="color:red"></span>
     </div>
     <div>
-        <label asp-for="State"></label>
+        <p></p>
+        <label asp-for="State">State of Residence</label>
         <select asp-for="State" asp-items="Model.States"></select>
         <span asp-validation-for="State" style="color:red"></span>
     </div>
     <div>
+        <p></p>
+        <span style="display:block"><b>Please indicate your activity level:</b></span>
         @foreach(var activitylevel in Model.ActivityLevels)
         { 
             <input type="radio" asp-for="ActivityLevel" value="@activitylevel"/>@activitylevel<br/>
@@ -29,6 +34,7 @@
         <span asp-validation-for="ActivityLevel" style="color:red"></span>
     </div>
     <div>
+        <p></p>
         <input type="submit" value="Submit" />
     </div>
 </form>
